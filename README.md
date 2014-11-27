@@ -1,4 +1,4 @@
 sud-solver
 ==========
 
-some simple setup for learning bootstrap
+some simple bootstrap setup
