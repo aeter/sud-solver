@@ -1,3 +1,8 @@
+/* Copyright 2014 Adrian Nackov
+ * Released under BSD Licence (2 clause):
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
 QUnit.test("SUDOKU.board_math.get_row_indexes", function(assert) {
     // test first row
     assert.deepEqual(SUDOKU.board_math.get_row_indexes(0),

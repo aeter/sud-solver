@@ -1,3 +1,8 @@
+/* Copyright 2014 Adrian Nackov
+ * Released under BSD Licence (2 clause):
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
 var SUDOKU = SUDOKU || {};
         
 SUDOKU.board_math = (function() {
