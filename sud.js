@@ -98,8 +98,8 @@ SUDOKU.solver = (function() {
         function to_int(index) { return parseInt(board[index]); }
         var nums = indexes.map(to_int);
 
-        function different_from_nums(num) { return nums.indexOf(num) === -1; }
-        return [1,2,3,4,5,6,7,8,9].filter(different_from_nums);
+        function different_than_nums(num) { return nums.indexOf(num) === -1; }
+        return [1,2,3,4,5,6,7,8,9].filter(different_than_nums);
     }
 
     // returns
