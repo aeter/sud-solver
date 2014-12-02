@@ -65,9 +65,12 @@ QUnit.test("SUDOKU.board_math.get_same_square_indexes", function(assert) {
                     "Bottom-right square indexes, end(80)");
 });
 
-// TODO - test get_related_indexes();
+QUnit.test("SUDOKU.board_math.get_related_indexes", function(assert) {
+    assert.deepEqual(SUDOKU.board_math.get_related_indexes(0),
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20, 27, 36, 45, 54, 63, 72],
+                    "Left-top related indexes (0)");
+});;
 
-// -------------------------------------------------------------
 // one public domain sudoku, from sourceforge.net/projects/winsudoku/
 var TEST_BOARD = "....2.6.19..8..5....6..3..26184....5.........7.5...9.4.....8.1.....14..9.3.9.....";
 
@@ -80,7 +83,8 @@ QUnit.test("SUDOKU.solver.get_possible_nums", function(assert) {
                     "possible nums, bottom-right corner");
 });
 
-// TODO
 QUnit.test("SUDOKU.solver.solve", function(assert) {
-    assert.deepEqual(SUDOKU.solver.solve(TEST_BOARD), "", "ERROR");
+    assert.deepEqual(SUDOKU.solver.solve(TEST_BOARD),
+                     "583729641942861537176543892618497325394285176725136984259678413867314259431952768",
+                     "solving some sudoku puzzle");
 });
