@@ -113,7 +113,7 @@ SUDOKU.solver = (function() {
         var possible_nums = get_possible_nums(next_unknown_index, board);
         if (possible_nums.length === 0) // bad recursion branch
             return null;
-        for (var i = 0, len = possible_nums.length; i < len; i++) {
+        for (var i in possible_nums) {
             board = _str_replace_at(next_unknown_index, possible_nums[i], board);
             var solution = solve(board);
             if (solution !== null)
