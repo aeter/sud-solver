@@ -5,8 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./vendor/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./vendor/qunit-1.15.0/qunit.css" rel="stylesheet">
+
     <script src="./vendor/jquery-1.11.1/jquery.min.js"></script>
     <script src="./vendor/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+    <script src="./vendor/qunit-1.15.0/qunit.js"></script>
+    <script src="./sud.js"></script>
+    <script src="./sud_tests.js"></script>
+
     <title>sud-solver</title>
     <style>
         body {
@@ -28,32 +34,28 @@
     <a href="https://github.com/aeter/sud-solver">
       <img id="github-forkme" src="./vendor/github/forkme_left_green_007200.png" alt="Fork me on GitHub">
     </a>
-
     <div class="container col-md-offset-3 col-md-6">
       <div class="jumbotron">
         <ul class="nav nav-pills">
-          <li class="active"><a href="#home" data-toggle="pill">Home</a></li>
-          <li><a href="#tests" data-toggle="pill">Tests</a></li>
+          <li class="active"><a href="#tests" data-toggle="pill">Tests</a></li>
+          <li><a href="#solver" data-toggle="pill">Solver</a></li>
         </ul>
         <p></p>
-
         <div class="tab-content">
-          <div id="home" class="tab-pane active">
+          <div id="tests" class="tab-pane">
+            <div id="qunit"></div>
+            <div id="qunit-fixture"></div>
+          </div><!-- /#tests -->
+          <div id="solver" class="tab-pane active">
             <table class="table table-bordered">
                <tr><td> row </td></tr>
                <tr><td> row </td></tr>
             </table>
-
             <button type="button" class="btn btn-primary">
               <span class="glyphicon glyphicon-play"></span> Solve
             </button>
-          </div>
-          <!-- ./home -->
-
-          <div id="tests" class="tab-pane">
-              lala
-          </div>
-        </div><!-- ./tab-content-->
+          </div><!-- /#solver-->
+        </div><!-- /.tab-content-->
       </div><!-- /.jumbotron-->
     </div><!-- /.container -->
   </body>
