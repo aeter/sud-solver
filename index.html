@@ -9,141 +9,183 @@
     <script src="./vendor/bootstrap-3.3.1/js/bootstrap.min.js"></script>
     <script src="./sud.js"></script>
     <title>sud-solver</title>
-    <style>
-        body {
-          background-color: #333;
-          padding-top: 20px;
-        }
-
-        #github-forkme {
-            position: absolute;
-            top: 0;
-            left: 0;
-            border: 0;
-        }
-
-        .cell {
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-        }
-
+    <style type="text/css">
+      body { background-color: #333; }
+      #github-forkme {
+          position: absolute;
+          top: 0;
+          left: 0;
+          border: 0;
+      }
+      .cell {
+          width: 50px;
+          height: 50px;
+          line-height: 50px;
+      }
+      .border-top-tr { border-top: 2px solid #424242; }
+      .border-bottom-tr { border-bottom: 2px solid #424242; }
+      .border-left-cell { border-left: 2px solid #424242; }
+      .border-right-cell { border-right: 2px solid #424242; }
     </style>
+    <script>
+        $(document).ready(function() {
+            var SUDOKU_UI = SUDOKU_UI || {
+                nums: "....2.6.19..8..5....6..3..26184....5.........7.5...9.4.....8.1.....14..9.3.9.....",
+                cells: $('input'),
+                solver: SUDOKU.solver
+            };
+            SUDOKU_UI.populate = function($cells, nums) {
+                $.each($cells, function(i, cell) {
+                     $(cell).val(nums[i]);
+                });
+            }
+            SUDOKU_UI.parse_board = function($cells) {
+                var nums = "";
+                $.each($cells, function(i, cell) {
+                    var val = $(cell).val();
+                    SUDOKU_UI.is_sudoku_digit(val) ? nums += val : nums += ".";
+                });
+                return nums;
+            }
+            SUDOKU_UI.is_sudoku_digit = function(_char) { return /^[1-9]$/.test(_char); }
+
+            // solve on click
+            $('#btn-solve-sudoku').on('click', function(e) {
+                // TODO - deal with multiple button clicks while calculating the solution
+                // TODO - show a loading spinner, ajaxload.info
+                // TODO - input validation (1-9)
+                var board = SUDOKU_UI.parse_board(SUDOKU_UI.cells);
+                var solution = SUDOKU_UI.solver.solve(board);
+                if (solution === null) 
+                    alert("No solution found!"); // TODO - bootstrap red color warning instead
+                else
+                    SUDOKU_UI.populate(SUDOKU_UI.cells, solution);
+            });
+
+            // on page load
+            SUDOKU_UI.populate(SUDOKU_UI.cells, SUDOKU_UI.nums);
+        });
+    </script>
   </head>
 
   <body>
+    <noscript>
+        <style type="text/css"> .container {display: none;} </style>
+        <div class="alert alert-danger text-center">You don't have Javascript enabled.</div>
+    </noscript>
     <a href="https://github.com/aeter/sud-solver">
       <img id="github-forkme" src="./vendor/github/forkme_left_green_007200.png" alt="Fork me on GitHub">
     </a>
     <div class="container col-xs-offset-4">
-          <table class="table-bordered">
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-              <tr>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-                  <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
-              </tr>
-          </table>
-          <br>
-          <button type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-play"></span> Solve
-          </button>
-          <a class="btn btn-primary" href="./sud_tests.html">
-            <span class="glyphicon glyphicon-stats"></span>  Tests
-          </a>
+      <br>
+      <table>
+        <tr class="border-top-tr">
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr class="border-top-tr">
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr class="border-top-tr">
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+        <tr class="border-bottom-tr">
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-left-cell" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control" type="text" maxlength="1"></td>
+          <td><input class="cell text-center form-control border-right-cell" type="text" maxlength="1"></td>
+        </tr>
+      </table>
+      <br>
+      <button type="button" class="btn btn-primary" id="btn-solve-sudoku">
+        <span class="glyphicon glyphicon-play"></span> Solve
+      </button>
+      <a class="btn btn-primary" href="./sud_tests.html">
+        <span class="glyphicon glyphicon-stats"></span>  Tests
+      </a>
     </div><!-- /.container -->
   </body>
 </html>
