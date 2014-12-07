@@ -10,7 +10,7 @@
     <script src="./sud.js"></script>
     <title>sud-solver</title>
     <style type="text/css">
-      body { background-color: #333; }
+      body { background-color: #424242; }
       #github-forkme {
           position: absolute;
           top: 0;
@@ -53,7 +53,8 @@
             $('#btn-solve-sudoku').on('click', function(e) {
                 // TODO - deal with multiple button clicks while calculating the solution
                 // TODO - show a loading spinner, ajaxload.info
-                // TODO - input validation (1-9)
+                // TODO - input validation (1-9), see
+                // TODO - has-error to parent, http://getbootstrap.com/css/#forms-control-validation
                 var board = SUDOKU_UI.parse_board(SUDOKU_UI.cells);
                 var solution = SUDOKU_UI.solver.solve(board);
                 if (solution === null) 
