@@ -51,16 +51,17 @@
 
             // solve on click
             $('#btn-solve-sudoku').on('click', function(e) {
-                // TODO - deal with multiple button clicks while calculating the solution
-                // TODO - show a loading spinner, ajaxload.info
-                // TODO - input validation (1-9), see
-                // TODO - has-error to parent, http://getbootstrap.com/css/#forms-control-validation
-                var board = SUDOKU_UI.parse_board(SUDOKU_UI.cells);
-                var solution = SUDOKU_UI.solver.solve(board);
-                if (solution === null) 
-                    alert("No solution found!"); // TODO - bootstrap red color warning instead
-                else
-                    SUDOKU_UI.populate(SUDOKU_UI.cells, solution);
+                var btn = $(this).button("loading");
+                // allow the button title to be updated to "Loading...", etc.
+                setTimeout(function() {
+                    var board = SUDOKU_UI.parse_board(SUDOKU_UI.cells);
+                    var solution = SUDOKU_UI.solver.solve(board);
+                    if (solution === null)
+                        $('#no_solution_found_dialog').modal('show');
+                    else
+                        SUDOKU_UI.populate(SUDOKU_UI.cells, solution);
+                    btn.button("reset");
+                }, 100);
             });
 
             // on page load
@@ -181,12 +182,27 @@
         </tr>
       </table>
       <br>
-      <button type="button" class="btn btn-primary" id="btn-solve-sudoku">
+      <button type="button" class="btn btn-primary" id="btn-solve-sudoku" data-loading-text="Solving ..." >
         <span class="glyphicon glyphicon-play"></span> Solve
       </button>
       <a class="btn btn-primary" href="./sud_tests.html">
         <span class="glyphicon glyphicon-stats"></span>  Tests
       </a>
+
+      <div class="modal" id="no_solution_found_dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">No solution found</h4>
+            </div><!-- /.modal-header -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div><!-- /.modal-footer -->
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
     </div><!-- /.container -->
   </body>
 </html>
+
